@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  packages: write   # ✅ дозвіл на публікацію образів
+  packages: write  
   id-token: write
 
 jobs:
