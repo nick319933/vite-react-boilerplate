@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import type { FunctionComponent } from "../common/types";
+import type { FunctionComponent } from "../../common/types";
 import { createEntity, Post } from "../../api/posts";
 
 export const NewPost = (): FunctionComponent => {
 	const [form, setForm] = useState<Omit<Post, "id">>({
 		title: "",
-		content: "",
+		body: "",
 	});
 	const [error, setError] = useState("");
 	const [created, setCreated] = useState(false);
@@ -45,8 +45,8 @@ export const NewPost = (): FunctionComponent => {
 						/>
 
 						<textarea
-							name="content"
-							value={form.content}
+							name="body"
+							value={form.body}
 							onChange={handleChange}
 							placeholder="Зміст"
 							className="w-full mb-6 p-3 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-40"

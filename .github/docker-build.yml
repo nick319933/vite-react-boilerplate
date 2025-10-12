@@ -1,0 +1,40 @@
+name: Build and Push Frontend Docker Image
+
+on:
+  workflow_dispatch: 
+  push:
+    branches:
+      - main
+      - 'feature/*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  
+
+      - name: Install pnpm and build
+        run: |
+          npm install -g pnpm
+          pnpm install
+          pnpm run build
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/nick319933/vite-react-boilerplate

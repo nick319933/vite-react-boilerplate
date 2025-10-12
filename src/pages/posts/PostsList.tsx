@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import type { FunctionComponent } from "../common/types";
+import type { FunctionComponent } from "../../common/types";
 import { getAllEntities, deleteEntity, Post } from "../../api/posts";
 
 export const PostsList = (): FunctionComponent => {
@@ -40,7 +40,8 @@ export const PostsList = (): FunctionComponent => {
 					>
 						<div className="max-w-[70%]">
 							<Link
-								to={`/posts/${post.id}`}
+								to="/posts/$id"
+								params={{ id: post.id }}
 								className="text-2xl font-semibold text-green-400 hover:text-green-300 hover:underline transition-colors select-text"
 							>
 								{post.title}
@@ -56,7 +57,7 @@ export const PostsList = (): FunctionComponent => {
 						</div>
 
 						<div className="flex flex-col sm:flex-row gap-4">
-							<Link to={`/posts/${post.id}`}>
+							<Link to="/posts/$id" params={{ id: post.id }}>
 								<button className="bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400 text-white px-5 py-2 rounded-2xl font-medium transition duration-300 shadow">
 									✏ Редагувати
 								</button>

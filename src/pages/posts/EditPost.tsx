@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "@tanstack/react-router";
-import { FunctionComponent } from "../common/types";
+import { FunctionComponent } from "../../common/types";
 import { getEntityById, updateEntity, Post } from "../../api/posts";
 
 export const EditPost = (): FunctionComponent => {
