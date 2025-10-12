@@ -1,31 +1,26 @@
-name: Build and Push Frontend Docker Image
+name: Build and Push Docker Image
 
 on:
-  workflow_dispatch: 
   push:
-    branches:
-      - main
-      - 'feature/*'
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  packages: write   # ✅ дозвіл на публікацію образів
+  id-token: write
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'  
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install pnpm and build
-        run: |
-          npm install -g pnpm
-          pnpm install
-          pnpm run build
-
-      - name: Log in to GitHub Container Registry
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -35,6 +30,5 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
           push: true
-          tags: ghcr.io/nick319933/vite-react-boilerplate
+          tags: ghcr.io/${{ github.actor }}/vite-react-boilerplate:latest
